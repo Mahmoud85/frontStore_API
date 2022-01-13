@@ -10,7 +10,6 @@ let testId: number;
 
 const getOrderType = (completed: boolean) => ({
   user_id: 1,
-  product_id: 1,
   quantity: 3,
   status: completed ? "complete" : "active",
 });
