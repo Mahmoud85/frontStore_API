@@ -3,6 +3,7 @@ import app from "../server";
 import ProductStore from "../models/users";
 
 const store = new ProductStore();
+let testId: number;
 
 describe("test users models", () => {
   describe("do methods exists", () => {
@@ -14,6 +15,46 @@ describe("test users models", () => {
     });
     it("Show Method Should Exist", () => {
       expect(store.show).toBeDefined();
+    });
+  });
+
+  describe("test database methods", () => {
+    let userID: number;
+    it("Create new User in Database", async () => {
+      const result = await store.create({
+        email: "mahmoud@mail.com",
+        first_name: "User",
+        last_name: "Test",
+        password: "password",
+      });
+      delete result.password;
+      testId = result.id as number;
+      expect(result).toEqual({
+        id: testId,
+        email: "mahmoud@mail.com",
+        first_name: "User",
+        last_name: "Test",
+      });
+    });
+    beforeAll(async () => {
+      const _result = await store.create({
+        email: "testSingleUSer@mail.com",
+        first_name: "User",
+        last_name: "Test",
+        password: "password",
+      });
+      delete _result.password;
+      userID = _result.id as unknown as number;
+    });
+    it("Retrieve Single User in Database", async () => {
+      const result = await store.show(`${userID}`);
+      delete result.password;
+      expect(result).toEqual({
+        id: userID,
+        email: "testSingleUSer@mail.com",
+        first_name: "User",
+        last_name: "Test",
+      });
     });
   });
 });
