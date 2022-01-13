@@ -27,7 +27,6 @@ export default class OrdersHandler {
     try {
       const newOrder = {
         user_id: req.body.user_id,
-        product_id: req.body.product_id,
         quantity: req.body.quantity,
         status: req.body.status,
       };
@@ -40,13 +39,18 @@ export default class OrdersHandler {
   };
 
   addOrderProduct = async (req: Request, res: Response) => {
+    console.log(req.params, req.body);
     try {
       const newOrder: OrderProduct = {
         user_id: req.params.id as unknown as number,
-        order_id: req.body.user_id,
+        order_id: req.body.order_id,
         product_id: req.body.product_id,
       };
       const placeProductOrder = await store.placeOrder(newOrder);
+      res.json({
+        msg: "order placed succesfully",
+        order: placeProductOrder,
+      });
     } catch (error) {
       res.status(400);
       res.json({ errorMsg: "couldn't place this order " + error });

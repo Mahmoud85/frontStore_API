@@ -76,7 +76,7 @@ export default class OrdersStore {
   async placeOrder(placedOrder: OrderProduct): Promise<OrderProduct> {
     try {
       const sql =
-        "INSERT INTO order_products (user_id, order_id, product_id) VALUES($1, $2, $3) RETURNING *";
+        "INSERT INTO product_orders (user_id, order_id, product_id) VALUES($1, $2, $3) RETURNING *";
       const conn = await client.connect();
 
       const result = await conn.query(sql, [
