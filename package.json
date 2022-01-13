@@ -6,10 +6,10 @@
   "scripts": {
     "start": "node src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
-    "test": "export ENV=test && db-migrate --env test down -c 4 && db-migrate --env test up -c 4 && jasmine-ts && db-migrate --env test down -c 4",
+    "test": "export ENV=test && db-migrate --env test up -c 3 && jasmine-ts && db-migrate --env test down -c 3",
     "tsc": "tsc",
-    "migrate": "db-migrate up -c 5",
-    "migrate-down": "db-migrate down -c 5"
+    "migrate": "db-migrate up -c 3",
+    "migrate-down": "db-migrate down -c 3"
   },
   "author": "Udacity",
   "license": "ISC",

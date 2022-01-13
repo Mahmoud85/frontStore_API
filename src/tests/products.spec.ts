@@ -4,7 +4,7 @@ import app from "../server";
 
 const store = new ProductStore();
 const request = supertest(app);
-describe("do methods exists", () => {
+describe("Products methods exists", () => {
   it("Create Method Should Exist", () => {
     expect(store.create).toBeDefined();
   });

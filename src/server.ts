@@ -6,6 +6,7 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 import usersHandler from "./handlers/users";
 import productsHandle from "./handlers/products";
+import OrdersHandler from "./handlers/orders";
 
 const app: express.Application = express();
 const address: string = "0.0.0.0:3000";
@@ -35,6 +36,7 @@ app.use(cors(corsOptions));
 
 const _usersHandler = new usersHandler();
 const _productsHandle = new productsHandle();
+const _OrdersHandler = new OrdersHandler();
 
 app.get("/", function (req: Request, res: Response) {
   res.send(
@@ -43,6 +45,7 @@ app.get("/", function (req: Request, res: Response) {
 });
 _usersHandler.userRoutes(app);
 _productsHandle.productRoutes(app);
+_OrdersHandler.orderRoutes(app);
 
 app.listen(3000, function () {
   console.log(`starting app on: ${address}`);
