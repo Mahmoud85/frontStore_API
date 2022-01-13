@@ -42,7 +42,7 @@ export default class OrdersHandler {
   addOrderProduct = async (req: Request, res: Response) => {
     try {
       const newOrder: OrderProduct = {
-        user_id: req.body.user_id,
+        user_id: req.params.id as unknown as number,
         order_id: req.body.user_id,
         product_id: req.body.product_id,
       };
