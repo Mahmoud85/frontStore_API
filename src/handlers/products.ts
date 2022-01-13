@@ -1,14 +1,14 @@
 import express, { Request, Response, NextFunction } from "express";
 import ProductStore, { Product } from "../models/products";
-import verifyAuthToken from "../middleware/verifyAuthToken";
+// import verifyAuthToken from "../middleware/verifyAuthToken";
 
 const store = new ProductStore();
 
 export default class productsHandle {
   productRoutes = (app: express.Application) => {
-    app.get("/products", verifyAuthToken, this.index);
-    app.get("/products/:id", verifyAuthToken, this.show);
-    app.post("/products/addnew", verifyAuthToken, this.create);
+    app.get("/products", this.index);
+    app.get("/products/:id", this.show);
+    app.post("/products/addnew", this.create);
   };
 
   index = async (req: Request, res: Response) => {
