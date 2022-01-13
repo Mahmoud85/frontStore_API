@@ -45,7 +45,13 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### Orders
 
 - id: [SERIAL PRIMARY KEY]
-- product_id: [bigint REFERENCES products(id)]
-- quantity: [integer]
 - user_id: [bigint REFERENCES users(id)]
+- quantity: [integer]
 - status:[VARCHAR]
+
+### product_orders
+
+- id: [SERIAL PRIMARY KEY]
+- user_id [bigint REFERENCES users(id)]
+- order_id [bigint REFERENCES orders(id)]
+- product_id [bigint REFERENCES products(id)]
