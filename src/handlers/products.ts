@@ -32,7 +32,7 @@ export default class productsHandle {
       const newProduct: Product = {
         name: req.body.name,
         price: parseInt(req.body.price),
-        category: req.body.category,
+        category: req.body?.category,
       };
       const product = await store.create(newProduct);
       res.json({ msg: "product has been added succesfully", product });

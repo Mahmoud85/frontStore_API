@@ -4,7 +4,7 @@ export type Product = {
   id?: number;
   name: string;
   price: number;
-  category: string;
+  category?: string;
 };
 
 export default class ProductStore {
@@ -43,7 +43,7 @@ export default class ProductStore {
       const result = await conn.query(sql, [
         product.name,
         product.price,
-        product.category,
+        product?.category,
       ]);
       const newProduct = result.rows[0];
       conn.release();
