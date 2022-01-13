@@ -29,23 +29,23 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Product
 
-- id
-- name
-- price
-- category
+- id: [SERIAL PRIMARY KEY]
+- name: [VARCHAR]
+- price: [integer]
+- category [VARCHAR]
 
 #### User
 
-- id
-- email
-- firs_tName
-- last_Name
-- password
+- id: [SERIAL PRIMARY KEY]
+- email: [VARCHAR] used as identifier for login
+- first_name: [VARCHAR]
+- last_name: [VARCHAR]
+- password: [VARCHAR]
 
 #### Orders
 
-- id
-- product_id id of each product in the order
-- quantity of each product in the order
-- user_id id of user associated to the order
-- status of order (active or complete)
+- id: [SERIAL PRIMARY KEY]
+- product_id: [bigint REFERENCES products(id)]
+- quantity: [integer]
+- user_id: [bigint REFERENCES users(id)]
+- status:[VARCHAR]
