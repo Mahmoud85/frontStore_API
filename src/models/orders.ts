@@ -7,6 +7,11 @@ export type Order = {
   quantity: number;
   status: string;
 };
+export type OrderProduct = {
+  user_id: number;
+  product_id: number;
+  order_id: number;
+};
 
 export default class OrdersStore {
   async index(): Promise<Order[]> {
@@ -39,14 +44,9 @@ export default class OrdersStore {
   async create(order: Order): Promise<Order> {
     try {
       const sql: string =
-        "INSERT INTO orders (user_id, product_id, quantity, status) VALUES($1, $2, $3, $4) RETURNING *";
+        "INSERT INTO orders (user_id, status) VALUES($1, $2) RETURNING *";
       const conn = await client.connect();
-      const result = await conn.query(sql, [
-        order.user_id,
-        order.product_id,
-        order.quantity,
-        order.status,
-      ]);
+      const result = await conn.query(sql, [order.user_id, order.status]);
 
       const newOrder = result.rows[0];
       conn.release();
@@ -67,6 +67,28 @@ export default class OrdersStore {
       conn.release();
     } catch (error) {
       throw new Error(`Error Deleting Orders.\n ${error}`);
+    }
+  }
+
+  async placeOrder(placedOrder: OrderProduct): Promise<OrderProduct> {
+    try {
+      const sql =
+        "INSERT INTO order_products (user_id, order_id, product_id) VALUES($1, $2, $3) RETURNING *";
+      const conn = await client.connect();
+
+      const result = await conn.query(sql, [
+        placedOrder.user_id,
+        placedOrder.order_id,
+        placedOrder.product_id,
+      ]);
+
+      const row = result.rows[0];
+      conn.release();
+      return row;
+    } catch (err) {
+      throw new Error(
+        `Could not add product ${placedOrder.product_id} to order ${placedOrder.order_id}: ${err}`
+      );
     }
   }
 }
