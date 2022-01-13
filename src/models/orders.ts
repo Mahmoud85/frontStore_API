@@ -3,7 +3,6 @@ import client from "../database";
 export type Order = {
   id?: number;
   user_id: number;
-  product_id: number;
   quantity: number;
   status: string;
 };
@@ -44,9 +43,13 @@ export default class OrdersStore {
   async create(order: Order): Promise<Order> {
     try {
       const sql: string =
-        "INSERT INTO orders (user_id, status) VALUES($1, $2) RETURNING *";
+        "INSERT INTO orders (user_id, quantity, status) VALUES($1, $2, $3) RETURNING *";
       const conn = await client.connect();
-      const result = await conn.query(sql, [order.user_id, order.status]);
+      const result = await conn.query(sql, [
+        order.user_id,
+        order.quantity,
+        order.status,
+      ]);
 
       const newOrder = result.rows[0];
       conn.release();
@@ -54,7 +57,7 @@ export default class OrdersStore {
       return newOrder;
     } catch (error) {
       throw new Error(
-        `Error attempting to create new Order(${order.product_id}, ${order.status}).\n ${error}`
+        `Error attempting to create new Order(${order.user_id}, ${order.status}).\n ${error}`
       );
     }
   }

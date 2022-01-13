@@ -4,6 +4,7 @@ import app from "../server";
 
 const store = new ProductStore();
 const request = supertest(app);
+let testId: number;
 describe("Products methods exists", () => {
   it("Create Method Should Exist", () => {
     expect(store.create).toBeDefined();
@@ -13,6 +14,37 @@ describe("Products methods exists", () => {
   });
   it("Show Method Should Exist", () => {
     expect(store.show).toBeDefined();
+  });
+  it("Create new Product in Database", async () => {
+    const result = await store.create({
+      name: "orange",
+      price: 1,
+      category: "fruit",
+    });
+    expect(result).toEqual({
+      id: result.id,
+      name: "orange",
+      price: 1,
+      category: "fruit",
+    });
+  });
+  beforeAll(async () => {
+    const result = await store.create({
+      name: "orange",
+      price: 1,
+      category: "fruit",
+    });
+    testId = result.id as number;
+  });
+  it("Retrieve Single Product in Database", async () => {
+    const result = await store.show(`${testId}`);
+
+    expect(result).toEqual({
+      id: testId,
+      name: "orange",
+      price: 1,
+      category: "fruit",
+    });
   });
 });
 
