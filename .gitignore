@@ -1,3 +1,5 @@
 node_modules
 #TS Build Output
 dist
+#adding .env file
+.env
