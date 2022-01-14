@@ -2,11 +2,14 @@ import orderStore, { Order } from "../models/orders";
 import orderStatus from "../services/orderStatus";
 import supertest from "supertest";
 import app from "../server";
+import _userStore from "../models/users";
 
 const store = new orderStore();
+const userStore = new _userStore();
 const ordersStatusStore = new orderStatus();
 const request = supertest(app);
 let testId: number;
+let newUSer: { id: any };
 
 const getOrderType = (completed: boolean) => ({
   user_id: 1,
@@ -31,21 +34,30 @@ describe("test database methods", () => {
   });
   it("Create new Order in Database", async () => {
     const result = await store.create({
-      user_id: 1,
+      //@ts-ignore
+      user_id: `${newUSer.id}`,
       quantity: 2,
       status: "active",
     });
     expect(result).toEqual({
       id: result.id,
       //@ts-ignore
-      user_id: "1",
+      user_id: `${newUSer.id}`,
       quantity: 2,
       status: "active",
     });
   });
   beforeAll(async () => {
+    //@ts-ignore
+    newUSer = await userStore.create({
+      email: "mahmoud@mail.com",
+      first_name: "User",
+      last_name: "Test",
+      password: "password",
+    });
     const _result = await store.create({
-      user_id: 1,
+      //@ts-ignore
+      user_id: `${newUSer.id}`,
       quantity: 2,
       status: "active",
     });
@@ -57,7 +69,7 @@ describe("test database methods", () => {
     expect(result).toEqual({
       id: testId,
       //@ts-ignore
-      user_id: "1",
+      user_id: `${newUSer.id}`,
       quantity: 2,
       status: "active",
     });

@@ -1,8 +1,8 @@
 import supertest from "supertest";
 import app from "../server";
-import ProductStore from "../models/users";
+import userStore from "../models/users";
 
-const store = new ProductStore();
+const store = new userStore();
 let testId: number;
 
 describe("test users models", () => {
