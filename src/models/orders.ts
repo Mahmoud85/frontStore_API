@@ -7,6 +7,7 @@ export type Order = {
   status: string;
 };
 export type OrderProduct = {
+  id?: number;
   user_id: number;
   product_id: number;
   order_id: number;

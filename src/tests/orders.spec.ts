@@ -23,9 +23,6 @@ describe("test database methods", () => {
   it("Show Method Should Exist", () => {
     expect(store.show).toBeDefined();
   });
-  it("place order method do exists", () => {
-    expect(store.placeOrder).toBeDefined();
-  });
   it("Get active orders method exists", () => {
     expect(ordersStatusStore.getActiveOrdersPerUser).toBeDefined();
   });
@@ -64,6 +61,11 @@ describe("test database methods", () => {
       quantity: 2,
       status: "active",
     });
+  });
+  it("Retrieve all orders in Database", async () => {
+    const result = await store.index();
+    const resultArryLength = result.length;
+    expect(resultArryLength).toBeTruthy();
   });
 });
 
