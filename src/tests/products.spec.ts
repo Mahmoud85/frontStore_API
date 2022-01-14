@@ -15,6 +15,9 @@ describe("Products methods exists", () => {
   it("Show Method Should Exist", () => {
     expect(store.show).toBeDefined();
   });
+  it("Show Method Should Exist", () => {
+    expect(store.clearAll).toBeDefined();
+  });
   it("Create new Product in Database", async () => {
     const result = await store.create({
       name: "orange",
@@ -45,6 +48,11 @@ describe("Products methods exists", () => {
       price: 1,
       category: "fruit",
     });
+  });
+  it("Retrieve all products in Database", async () => {
+    const result = await store.index();
+    const resultArryLength = result.length;
+    expect(resultArryLength).toBeTruthy();
   });
 });
 
