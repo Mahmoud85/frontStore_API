@@ -22,6 +22,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### Orders
 
 - [POST] /orders/addnew Add new order
+- [POST] /orders/:id/placeOrder Add new row to product-orders table and return the added item
 - [GET] /orders/:id/active Retrive active orders as per use id
 - [GET] /orders/:id/complete Retrive complete orders as per use id
 
