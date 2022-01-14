@@ -56,3 +56,71 @@ These are the notes from a meeting with the frontend developer that describe wha
 - user_id [bigint REFERENCES users(id)]
 - order_id [bigint REFERENCES orders(id)]
 - product_id [bigint REFERENCES products(id)]
+
+## database Schema
+
+- users
+
+                                        Table "public.users"
+
+  Column | Type | Collation | Nullable | Default
+  ------------+------------------------+-----------+----------+-----------------------------------
+  id | integer | | not null | nextval('users_id_seq'::regclass)
+  email | character varying(100) | | |
+  first_name | character varying(100) | | |
+  last_name | character varying(100) | | |
+  password | character varying | | |
+  Indexes:
+  "users_pkey" PRIMARY KEY, btree (id)
+  Referenced by:
+  TABLE "orders" CONSTRAINT "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+  TABLE "product_orders" CONSTRAINT "product_orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+
+- products
+
+                                        Table "public.products"
+
+  Column | Type | Collation | Nullable | Default
+  ----------+------------------------+-----------+----------+--------------------------------------
+  name | character varying(100) | | |
+  price | integer | | |
+  category | character varying(200) | | |
+  id | integer | | not null | nextval('products_id_seq'::regclass)
+  Indexes:
+  "products_pkey" PRIMARY KEY, btree (id)
+  Referenced by:
+  TABLE "product_orders" CONSTRAINT "product_orders_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)
+
+- orders
+
+                                       Table "public.orders"
+
+  Column | Type | Collation | Nullable | Default
+  ----------+------------------------+-----------+----------+------------------------------------
+  user_id | bigint | | |
+  quantity | integer | | |
+  status | character varying(100) | | |
+  id | integer | | not null | nextval('orders_id_seq'::regclass)
+  Indexes:
+  "orders_pkey" PRIMARY KEY, btree (id)
+  Foreign-key constraints:
+  "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+  Referenced by:
+  TABLE "product_orders" CONSTRAINT "product_orders_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
+
+- product orders
+
+                                Table "public.product_orders"
+
+  Column | Type | Collation | Nullable | Default
+  ------------+---------+-----------+----------+--------------------------------------------
+  user_id | bigint | | |
+  order_id | bigint | | |
+  product_id | bigint | | |
+  id | integer | | not null | nextval('product_orders_id_seq'::regclass)
+  Indexes:
+  "product_orders_pkey" PRIMARY KEY, btree (id)
+  Foreign-key constraints:
+  "product_orders_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
+  "product_orders_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)
+  "product_orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
