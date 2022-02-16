@@ -16,7 +16,8 @@ jobs:
       - checkout
       - run:
           name: install
-          command: npm run install
+          command: |
+            npm run install
       - run:
           name: test
           command: npm run test
