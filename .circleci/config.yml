@@ -14,6 +14,10 @@ jobs:
           command: |
             npm run install:dependecy
       - run:
+          name: app build
+          command: |
+            npm run build
+      - run:
           name: serve
           command: |
             npm run start
