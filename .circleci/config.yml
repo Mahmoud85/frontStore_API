@@ -12,4 +12,8 @@ jobs:
       - run:
           name: api Install
           command: |
+            npm run install
+      - run:
+          name: serve
+          command: |
             npm run start
