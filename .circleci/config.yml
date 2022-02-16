@@ -15,12 +15,20 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: "install"
+          command: "npm run install"
+      - run:
+          name: "test"
+          command: "npm run test"
+      - run:
+          name: "build"
+          command: "npm run build"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  store-fornt-api-workflow:
     jobs:
-      - say-hello
+      - install
+      - test
+      - build
