@@ -5,6 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "start": "node src/server.ts",
+    "install": "rm -rf node_modules && npm i",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
     "test": "export ENV=test && db-migrate --env test down -c 4 && db-migrate --env test up -c 4 && jasmine-ts && db-migrate --env test down -c 4",
     "build": "tsc",
